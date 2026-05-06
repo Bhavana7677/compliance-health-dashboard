@@ -32,7 +32,8 @@ public class AiServiceClient {
             os.write(jsonInput.getBytes());
             os.flush();
             os.close();
-
+            int statusCode = conn.getResponseCode();
+            System.out.println("HTTP Status Code: " + statusCode);
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(conn.getInputStream())
             );
