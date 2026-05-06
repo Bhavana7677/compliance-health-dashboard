@@ -1,8 +1,11 @@
 package com.internship.tool.service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
 
 public class AiServiceClient {
 
@@ -16,13 +19,30 @@ public class AiServiceClient {
             conn.setDoOutput(true);
 
             String jsonInput = "{\"text\": \"" + inputText + "\"}";
+            System.out.println("[" + LocalDateTime.now() + "] Sending request: " + inputText);
 
             OutputStream os = conn.getOutputStream();
             os.write(jsonInput.getBytes());
             os.flush();
             os.close();
 
-            return "AI processed: " + inputText;
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream())
+            );
+
+            StringBuilder responseBuilder = new StringBuilder();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                responseBuilder.append(line);
+            }
+
+           String response = responseBuilder.toString();
+           System.out.println("[" + LocalDateTime.now() + "] Received response: " + response);
+           br.close();
+
+// clean JSON response
+         return response;
 
         } catch (Exception e) {
             e.printStackTrace();
