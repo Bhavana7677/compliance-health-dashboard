@@ -65,7 +65,17 @@ public class AiServiceClient {
            System.out.println("Response Time: " + (endTime - startTime) + " ms");
 
 // clean JSON response
-         return response;
+         String cleanedText = response.split("\"cleaned_text\":")[1]
+        .split(",")[0]
+        .replace("\"", "")
+        .trim();
+
+String message = response.split("\"message\":")[1]
+        .replace("}", "")
+        .replace("\"", "")
+        .trim();
+
+return "Cleaned Text: " + cleanedText + " | Message: " + message;
 
         } catch (Exception e) {
             e.printStackTrace();
