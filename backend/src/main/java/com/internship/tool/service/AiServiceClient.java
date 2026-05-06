@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 
 public class AiServiceClient {
 
+    static int requestCount = 0;
+
     public static void writeLog(String logMessage) {
         try {
             PrintWriter writer = new PrintWriter(new FileWriter("logs.txt", true));
@@ -22,6 +24,8 @@ public class AiServiceClient {
     }
 
     public static String callAIService(String inputText) {
+
+        requestCount++;
 
         if (inputText == null || inputText.trim().isEmpty()) {
             return "Error: Input cannot be empty";
@@ -49,6 +53,8 @@ public class AiServiceClient {
 
             System.out.println("[" + LocalDateTime.now()
                     + "] Sending request: " + inputText);
+
+            System.out.println("Total Requests: " + requestCount);
 
             writeLog("[" + LocalDateTime.now()
                     + "] Sending request: " + inputText);
