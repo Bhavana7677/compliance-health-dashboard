@@ -6,8 +6,19 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 public class AiServiceClient {
+          public static void writeLog(String message) {
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter("logs.txt", true));
+            writer.println(message);
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("Log writing failed");
+        }
+    }
 
     public static String callAIService(String inputText) {
      if (inputText == null || inputText.trim().isEmpty()) {
@@ -28,7 +39,7 @@ public class AiServiceClient {
 
             String jsonInput = "{\"text\": \"" + inputText + "\"}";
             System.out.println("[" + LocalDateTime.now() + "] Sending request: " + inputText);
-
+            writeLog("[" + LocalDateTime.now() + "] Sending request: " + inputText);
             OutputStream os = conn.getOutputStream();
             os.write(jsonInput.getBytes());
             os.flush();
@@ -48,6 +59,7 @@ public class AiServiceClient {
 
            String response = responseBuilder.toString();
            System.out.println("[" + LocalDateTime.now() + "] Received response: " + response);
+           writeLog("[" + LocalDateTime.now() + "] Received response: " + response);
            br.close();
            long endTime = System.currentTimeMillis();
            System.out.println("Response Time: " + (endTime - startTime) + " ms");
@@ -62,7 +74,7 @@ public class AiServiceClient {
     }
 
     public static void main(String[] args) {
-        String response = callAIService("");
+        String response = callAIService("Test input 123");
         System.out.println("Response: " + response);
     }
 }
