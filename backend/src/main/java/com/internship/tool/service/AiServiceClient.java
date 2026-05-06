@@ -8,10 +8,14 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class AiServiceClient {
 
     static int requestCount = 0;
+
+    static ArrayList<String> requestHistory =
+            new ArrayList<>();
 
     public static String sanitizeInput(String input) {
 
@@ -45,6 +49,8 @@ public class AiServiceClient {
 
         requestCount++;
 
+        requestHistory.add(inputText);
+
         if (inputText == null || inputText.trim().isEmpty()) {
             return "Error: Input cannot be empty";
         }
@@ -73,6 +79,9 @@ public class AiServiceClient {
                     + "] Sending request: " + inputText);
 
             System.out.println("Total Requests: " + requestCount);
+
+            System.out.println("Request History: "
+                    + requestHistory);
 
             writeLog("success_logs.txt",
                     "[" + LocalDateTime.now()
