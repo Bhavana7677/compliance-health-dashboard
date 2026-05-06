@@ -10,6 +10,13 @@ import java.time.LocalDateTime;
 public class AiServiceClient {
 
     public static String callAIService(String inputText) {
+     if (inputText == null || inputText.trim().isEmpty()) {
+    return "Error: Input cannot be empty";
+     }
+
+     if (inputText.length() > 100) {
+    return "Error: Input too long";
+    }
         try {
             URL url = new URL("http://127.0.0.1:5000/generate-report");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -25,7 +32,8 @@ public class AiServiceClient {
             os.write(jsonInput.getBytes());
             os.flush();
             os.close();
-
+            int statusCode = conn.getResponseCode();
+            System.out.println("HTTP Status Code: " + statusCode);
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(conn.getInputStream())
             );
@@ -51,7 +59,7 @@ public class AiServiceClient {
     }
 
     public static void main(String[] args) {
-        String response = callAIService("Hello from Java");
+        String response = callAIService("");
         System.out.println("Response: " + response);
     }
 }
