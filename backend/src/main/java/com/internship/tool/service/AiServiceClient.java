@@ -13,6 +13,15 @@ public class AiServiceClient {
 
     static int requestCount = 0;
 
+    public static String sanitizeInput(String input) {
+
+        input = input.trim();
+
+        input = input.replaceAll("[<>]", "");
+
+        return input;
+    }
+
     public static void writeLog(String fileName, String logMessage) {
 
         try {
@@ -31,6 +40,8 @@ public class AiServiceClient {
     }
 
     public static String callAIService(String inputText) {
+
+        inputText = sanitizeInput(inputText);
 
         requestCount++;
 
@@ -141,7 +152,7 @@ public class AiServiceClient {
     public static void main(String[] args) {
 
         String response =
-                callAIService("Test input 123");
+                callAIService("   <Test input 123>   ");
 
         System.out.println("Response: " + response);
     }

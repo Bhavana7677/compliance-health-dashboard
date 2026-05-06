@@ -1,2 +1,4 @@
 [2026-05-06T14:27:11.762708500] Sending request: Test input 123
 [2026-05-06T14:27:11.898713800] Received response: {  "cleaned_text": "Test input 123",  "message": "Valid input"}
+[2026-05-06T14:57:57.703716100] Sending request: Test input 123
+[2026-05-06T14:57:57.845198] Received response: {  "cleaned_text": "Test input 123",  "message": "Valid input"}
