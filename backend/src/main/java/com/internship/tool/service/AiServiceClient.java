@@ -13,12 +13,19 @@ public class AiServiceClient {
 
     static int requestCount = 0;
 
-    public static void writeLog(String logMessage) {
+    public static void writeLog(String fileName, String logMessage) {
+
         try {
-            PrintWriter writer = new PrintWriter(new FileWriter("logs.txt", true));
+
+            PrintWriter writer =
+                    new PrintWriter(new FileWriter(fileName, true));
+
             writer.println(logMessage);
+
             writer.close();
+
         } catch (Exception e) {
+
             System.out.println("Log writing failed");
         }
     }
@@ -56,7 +63,8 @@ public class AiServiceClient {
 
             System.out.println("Total Requests: " + requestCount);
 
-            writeLog("[" + LocalDateTime.now()
+            writeLog("success_logs.txt",
+                    "[" + LocalDateTime.now()
                     + "] Sending request: " + inputText);
 
             OutputStream os = conn.getOutputStream();
@@ -86,7 +94,8 @@ public class AiServiceClient {
             System.out.println("[" + LocalDateTime.now()
                     + "] Received response: " + response);
 
-            writeLog("[" + LocalDateTime.now()
+            writeLog("success_logs.txt",
+                    "[" + LocalDateTime.now()
                     + "] Received response: " + response);
 
             br.close();
@@ -123,7 +132,7 @@ public class AiServiceClient {
 
             System.out.println(errorMessage);
 
-            writeLog(errorMessage);
+            writeLog("error_logs.txt", errorMessage);
 
             return "Error: AI service not reachable";
         }
