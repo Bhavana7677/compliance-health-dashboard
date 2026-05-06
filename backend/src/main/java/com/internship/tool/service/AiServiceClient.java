@@ -18,6 +18,7 @@ public class AiServiceClient {
     return "Error: Input too long";
     }
         try {
+            long startTime = System.currentTimeMillis();
             URL url = new URL("http://127.0.0.1:5000/generate-report");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -48,6 +49,8 @@ public class AiServiceClient {
            String response = responseBuilder.toString();
            System.out.println("[" + LocalDateTime.now() + "] Received response: " + response);
            br.close();
+           long endTime = System.currentTimeMillis();
+           System.out.println("Response Time: " + (endTime - startTime) + " ms");
 
 // clean JSON response
          return response;
