@@ -14,6 +14,8 @@ public class AiServiceClient {
 
     static int requestCount = 0;
 
+    static int failedRequests = 0;
+
     static ArrayList<String> requestHistory =
             new ArrayList<>();
 
@@ -151,6 +153,11 @@ public class AiServiceClient {
                             + e.getMessage();
 
             System.out.println(errorMessage);
+
+            failedRequests++;
+
+            System.out.println("Failed Requests: "
+                    + failedRequests);
 
             writeLog("error_logs.txt", errorMessage);
 
